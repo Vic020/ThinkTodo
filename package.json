@@ -1,0 +1,26 @@
+{
+  "name": "thinktodo",
+  "version": "0.1.0",
+  "description": "Create, check and complete todo items, all by keyboard.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vic020/ThinkTodo.git"
+  },
+  "keywords": [
+    "todo"
+  ],
+  "author": "Vic Yu <i@vicyu.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Vic020/ThinkTodo/issues"
+  },
+  "homepage": "https://github.com/Vic020/ThinkTodo#readme",
+  "devDependencies": {
+    "electron": "^5.0.6"
+  }
+}
