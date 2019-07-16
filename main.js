@@ -1,6 +1,6 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, globalShortcut} = require('electron');
 
-let win
+let win;
 
 function createWindow() {
     win = new BrowserWindow({
@@ -9,28 +9,70 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true
         },
-        titleBarStyle: 'hiddenInset'
-    })
+        titleBarStyle: 'hiddenInset',
+        show: false
+    });
 
-    win.loadFile("index.html")
+    win.loadFile("index.html");
 
-    win.webContents.openDevTools()
+    win.once('ready-to-show', () => {
+        win.show()
+    });
+
+    win.webContents.openDevTools();
+
+    win.on('close', (event) => {
+        console.log("windows close");
+        win.hide();
+        win.setSkipTaskbar(true);
+        event.preventDefault();
+    });
 
     win.on('closed', () => {
-        win = null
     })
 }
 
-app.on('ready', createWindow)
+function switchWindow() {
+    if (win.isVisible()) {
+        win.hide()
+    } else {
+        win.show();
+        app.focus()
+    }
+}
+
+app.on('ready', () => {
+    globalShortcut.register('CommandOrControl+Shift+O', () => {
+        if (win == null) {
+            createWindow()
+        }
+        switchWindow()
+    })
+});
+
+
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
     if (process.platform != 'darwin') {
         app.quit()
     }
-})
+});
 
 app.on('activate', () => {
     if (win == null) {
         createWindow()
     }
-})
+});
+
+app.on('will-quit', () => {
+    // 注销快捷键
+    globalShortcut.unregister('CommandOrControl+Shift+O');
+
+    // 注销所有快捷键
+    globalShortcut.unregisterAll()
+});
+
+app.on('quit', () => {
+    app.quit()
+});
