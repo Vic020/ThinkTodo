@@ -4,14 +4,19 @@ let win;
 
 function createWindow() {
     win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        minWidth: 800,
+        minHeight: 600,
+
         webPreferences: {
             nodeIntegration: true
         },
         titleBarStyle: 'hiddenInset',
         show: false
     });
+
+    win.selfOptions = {
+        shouldQuit: false
+    };
 
     win.loadFile("index.html");
 
@@ -22,13 +27,18 @@ function createWindow() {
     win.webContents.openDevTools();
 
     win.on('close', (event) => {
-        console.log("windows close");
-        win.hide();
-        win.setSkipTaskbar(true);
-        event.preventDefault();
+        if (!win.selfOptions.shouldQuit) {
+            console.log("windows close");
+            win.hide();
+            event.preventDefault()
+        } else {
+            console.log("windows quit")
+        }
+
     });
 
-    win.on('closed', () => {
+    win.on('closed', (event) => {
+
     })
 }
 
@@ -54,6 +64,7 @@ app.on('ready', () => {
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
+    console.log("window-all-closed")
     if (process.platform != 'darwin') {
         app.quit()
     }
@@ -66,13 +77,22 @@ app.on('activate', () => {
 });
 
 app.on('will-quit', () => {
+    console.log("will-quit")
     // 注销快捷键
     globalShortcut.unregister('CommandOrControl+Shift+O');
 
     // 注销所有快捷键
     globalShortcut.unregisterAll()
+    if (process.platform != 'darwin') {
+        app.quit()
+    }
 });
 
+app.on('before-quit', () => {
+    win.selfOptions.shouldQuit = true
+})
+
 app.on('quit', () => {
+    win = null;
     app.quit()
 });
