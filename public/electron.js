@@ -18,13 +18,14 @@ function createWindow() {
         shouldQuit: false
     };
 
-    win.loadFile("index.html");
+    // win.loadFile("index.html");
+    win.loadURL("https://bytedance.feishu.cn/space/doc/doccnDGJ0NSnDs5KTL4pLsbIiTg")
 
     win.once('ready-to-show', () => {
         win.show()
     });
 
-    win.webContents.openDevTools();
+    // win.webContents.openDevTools();
 
     win.on('close', (event) => {
         if (!win.selfOptions.shouldQuit) {
@@ -37,7 +38,7 @@ function createWindow() {
 
     });
 
-    win.on('closed', (event) => {
+    win.on('closed', () => {
 
     })
 }
@@ -64,8 +65,8 @@ app.on('ready', () => {
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
-    console.log("window-all-closed")
-    if (process.platform != 'darwin') {
+    console.log("window-all-closed");
+    if (process.platform !== 'darwin') {
         app.quit()
     }
 });
@@ -77,20 +78,20 @@ app.on('activate', () => {
 });
 
 app.on('will-quit', () => {
-    console.log("will-quit")
+    console.log("will-quit");
     // 注销快捷键
     globalShortcut.unregister('CommandOrControl+Shift+O');
 
     // 注销所有快捷键
-    globalShortcut.unregisterAll()
-    if (process.platform != 'darwin') {
+    globalShortcut.unregisterAll();
+    if (process.platform !== 'darwin') {
         app.quit()
     }
 });
 
 app.on('before-quit', () => {
     win.selfOptions.shouldQuit = true
-})
+});
 
 app.on('quit', () => {
     win = null;

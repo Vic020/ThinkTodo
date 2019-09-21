@@ -2,14 +2,16 @@
   "name": "thinktodo",
   "version": "0.1.0",
   "description": "Create, check and complete todo items, all by keyboard.",
-  "main": "main.js",
+  "main": "public/electron.js",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electorn": "electron ."
+    "electorn": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -33,7 +35,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
-    "typescript": "3.5.3"
+    "typescript": "3.5.3",
+    "electron-builder": "^21.2.0"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -49,5 +52,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "@types/react-router-dom": "^4.3.4",
+    "antd": "^3.20.6"
+  },
+  "build": {
+    "appId": "your.id",
+    "mac": {
+      "category": "your.app.category.type"
+    }
   }
 }
