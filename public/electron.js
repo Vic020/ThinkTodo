@@ -1,18 +1,27 @@
 const {app, BrowserWindow, globalShortcut} = require('electron');
 
+const path = require('path')
+
+
 let win;
 
 function createWindow() {
     win = new BrowserWindow({
         minWidth: 800,
         minHeight: 600,
+        maxWidth: 800,
+        maxHeight: 600,
 
         webPreferences: {
             nodeIntegration: true
         },
         titleBarStyle: 'hiddenInset',
-        show: false
+        show: false,
+        icon: path.join(__dirname, "assets/icon.png")
     });
+
+    win.setResizable(false)
+
 
     win.selfOptions = {
         shouldQuit: false
