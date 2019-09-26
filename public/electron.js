@@ -15,7 +15,7 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true
         },
-        titleBarStyle: 'hiddenInset',
+        // titleBarStyle: 'hiddenInset',
         show: false,
         icon: path.join(__dirname, "assets/icon.png")
     });
